@@ -41,9 +41,7 @@ async def genStr(_, msg: Message):
             reply_to_message_id=msg.message_id
         )
         return
-    ## Doing Force Sub 🤣
-    update_channel = UPDATES_CHANNEL
-    if update_channel:
+    if update_channel := UPDATES_CHANNEL:
         try:
             user = await bot.get_chat_member(update_channel, msg.chat.id)
             if user.status == "kicked":
@@ -92,7 +90,7 @@ async def genStr(_, msg: Message):
     hash = await bot.ask(chat.id, HASH_TEXT)
     if await is_cancel(msg, hash.text):
         return
-    if not len(hash.text) >= 30:
+    if len(hash.text) < 30:
         await msg.reply("`API_HASH` is Invalid.\nPress /start to Start Again!")
         return
     api_hash = hash.text
